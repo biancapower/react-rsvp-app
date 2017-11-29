@@ -4,6 +4,7 @@ import GuestList from './GuestList'
 
 class App extends Component {
   state = {
+    isFiltered: false,
     guests: [
       {
         name: 'Bob',
@@ -21,7 +22,7 @@ class App extends Component {
         isEditing: true
       }
     ]
-  }
+  };
 
   toggleGuestPropertyAt = (property, indexToChange) =>
     this.setState({
@@ -37,10 +38,10 @@ class App extends Component {
     });
 
   toggleConfirmationAt = index =>
-    this.toggleGuestPropertyAt("isConfirmed", index)
+    this.toggleGuestPropertyAt("isConfirmed", index);
 
   toggleEditingAt = index =>
-    this.toggleGuestPropertyAt("isEditing", index)
+    this.toggleGuestPropertyAt("isEditing", index);
 
   setNameAt = (name, indexToChange) =>
     this.setState({
@@ -55,7 +56,10 @@ class App extends Component {
       })
     });
 
-  getTotalInvited = () => this.state.guests.length
+  toggleFilter = () =>
+    this.setState({ isFiltered: !this.state.isFiltered });
+
+  getTotalInvited = () => this.state.guests.length;
   // getAttendingGuests = () =>
   // getUnconfirmedGuests = () =>
 
@@ -74,7 +78,10 @@ class App extends Component {
           <div>
             <h2>Invitees</h2>
             <label>
-              <input type="checkbox" /> Hide those who have not responded
+              <input
+                type="checkbox"
+                onChange={this.toggleFilter}
+                checked={this.state.isFiltered} /> Hide those who have not responded
             </label>
           </div>
           <table className="counter">
@@ -99,6 +106,7 @@ class App extends Component {
             toggleConfirmationAt={this.toggleConfirmationAt}
             toggleEditingAt={this.toggleEditingAt}
             setNameAt={this.setNameAt}
+            isFiltered={this.state.isFiltered}
           />
 
         </div>
